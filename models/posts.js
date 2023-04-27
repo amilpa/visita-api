@@ -2,22 +2,29 @@
 const mongoose = require('mongoose')
 
 const postSchema = mongoose.Schema({
+  id : {
+    type : String,
+    required : true
+  },
   text : {
     type : String,
     minLength : 0,
     maxLength : 200
   },
   postedBy : {
-    type : mongoose.SchemaTypes.ObjectId,
+    type : String,
     ref : "user"
-  },
-  imageId : {
-    type : Number,
-    required : true
   },
   createdAt : {
     type : Date, 
     default : Date.now()
+  },
+  imageURL : {
+    type : String,
+    required : true
+  },
+  userURL : {
+    type : String
   }
 })
 

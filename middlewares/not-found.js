@@ -1,6 +1,6 @@
 
 const notFound = (req,res) => {
-  res.send('Resource not found')
+  res.status(404).send('Resource not found')
 }
 
 module.exports = notFound
