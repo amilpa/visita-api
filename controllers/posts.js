@@ -11,6 +11,11 @@ const getAllPosts = async (req,res) => {
   // return res.send('Hello world')
 } 
 
+const getPosts = async (req,res) => {
+  const posts = await Post.find({ id : req.params.id })
+  res.status(statusCodes.OK).json({ posts : posts , nBHits : posts.length})
+}
+
 const createPost = async (req,res) => {
   if(!req.body)
   {
@@ -51,4 +56,4 @@ const createPostImage = async (req,res) => {
   post.save()
 }
 
-module.exports = { getAllPosts , createPost , createPostImage }
+module.exports = { getAllPosts , createPost , createPostImage , getPosts }

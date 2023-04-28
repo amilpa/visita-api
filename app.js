@@ -11,6 +11,9 @@ const handleError = require('./middlewares/error-handler')
 const user = require('./routes/user')
 const posts = require('./routes/posts')
 const images = require('./routes/images')
+const home = require('./routes/home')
+
+
 const notFound = require('./middlewares/not-found')
 
 //middlewares 
@@ -19,6 +22,7 @@ app.use(fileUpload())
 
 app.use('/api/v1/users',user)
 app.use('/api/v1/posts',posts)
+app.use('/api/v1/home',home)
 app.use('/images',images)
 
 app.use(notFound)

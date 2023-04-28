@@ -16,8 +16,17 @@ const createUserClient = async (req,res) => {
   return res.status(statusCodes.INTERNAL_SERVER_ERROR).json({ message : "Server error occured" })
 }
 
-const createUserHost = (req,res) => {
-  res.send('Created host')
+const createUserHost = async (req,res) => {
+  if(!(await User.findOne({ id : req.body.id})))
+  {
+    const newUser = await User.create(req.body)
+    return res.status(statusCodes.OK).json(newUser)
+  }
+  else{
+    const user = await User.findOne({ id : req.body.id })
+    return res.status(statusCodes.OK).json(user)
+  }
+  return res.status(statusCodes.INTERNAL_SERVER_ERROR).json({ message : "Server error occured" })
 }
 
 const getUser = async (req,res) => {
