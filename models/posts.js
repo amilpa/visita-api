@@ -12,8 +12,7 @@ const postSchema = mongoose.Schema({
     maxLength : 200
   },
   postedBy : {
-    type : String,
-    ref : "user"
+    type : String
   },
   createdAt : {
     type : Date, 
@@ -21,7 +20,6 @@ const postSchema = mongoose.Schema({
   },
   imageURL : {
     type : String,
-    required : true
   },
   userURL : {
     type : String

@@ -5,6 +5,8 @@ const path = require('path')
 
 const { BadRequest } = require('../errors/bad-request') 
 
+const cloudinary = require('../cloud/cloudinary')
+
 const getAllPosts = async (req,res) => {
   const posts = await Post.find()
   res.status(statusCodes.OK).json({ posts : posts , nBHits : posts.length })
@@ -28,32 +30,13 @@ const createPost = async (req,res) => {
 }
 
 const createPostImage = async (req,res) => {
-  // console.log(req.files)
-  // const post = await Post.find({ _id : req.params.id })
-  // post.imageURL = `${process.env.API_URL}/images/posts/${req.params.id}.jpg`
-  // res.status(statusCodes.OK).json({ message : "Success" })
-  let sampleFile;
-  let uploadPath;
 
-  if (!req.files || Object.keys(req.files).length === 0) {
-    res.status(400).send('No files were uploaded.');
-  }
-
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
-  sampleFile = req.files.picture;
-  uploadPath = path.resolve(__dirname,'..') + '/uploads/posts/' + req.params.id +'.jpg';
-
-  // Use the mv() method to place the file somewhere on your server
-  sampleFile.mv(uploadPath, function(err) {
-    if (err)
-      console.log(err)
-      res.status(500).send(err);
-  });
+  await cloudinary.uploader.upload(req.files.image.tempFilePath, {public_id: req.params.id , folder : "Posts"})
 
   const post = await Post.findOne({ _id: req.params.id })
-  post.userURL = req.body.userURL
-  post.imageURL = `http://192.168.137.1:4567/images/posts/${req.params.id}.jpg`
-  post.save()
+  post.imageURL = cloudinary.url(`Posts/${req.params.id}` , { secure : true})
+  post.save().catch((error) => res.send(error.message))
+  res.send(post)
 }
 
 module.exports = { getAllPosts , createPost , createPostImage , getPosts }
