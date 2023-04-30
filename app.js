@@ -33,11 +33,11 @@ const home = require('./routes/home')
 const notFound = require('./middlewares/not-found')
 
 //middlewares 
+app.use(cors())
+app.use(helmet())
 app.use(express.json())
 app.use(fileUpload({ useTempFiles : true}))
 // app.use(upload.none())
-app.use(cors())
-app.use(helmet())
 
 app.use('/api/v1/users',user)
 app.use('/api/v1/posts',posts)

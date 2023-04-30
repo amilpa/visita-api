@@ -23,7 +23,7 @@ const createPost = async (req,res) => {
   {
     throw new BadRequest('Bad request detected')
   }
-  const newPost = await Post.create({...req.body , imageURL : "the world is ending" })
+  const newPost = await Post.create({...req.body })
   // newPost.imageURL = `${process.env.API_URL}/images/posts/${req.body.id}.jpg`
   // await newPost.save()
   res.status(statusCodes.OK).json(newPost)

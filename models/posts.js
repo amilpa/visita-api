@@ -20,6 +20,7 @@ const postSchema = mongoose.Schema({
   },
   imageURL : {
     type : String,
+    default : " "
   },
   userURL : {
     type : String
